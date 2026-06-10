@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="FrontStreet — The home for Boston's Black artists. Your portfolio, your sales, and your events in one place. Join the waitlist.">
+    <meta name="theme-color" content="#0D0D0D">
+    <title>FrontStreet — The Home for Boston's Black Artists</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        surface: { 0: '#0D0D0D', 1: '#1A1A1A', 2: '#262626', 3: '#333333' },
+                        brand: { primary: '#C4702A', 'primary-dark': '#9E5720', 'primary-light': '#E8914E', accent: '#7B4FA6', 'accent-light': '#A87FD0' },
+                        text: { primary: '#F5F0E8', secondary: '#A89880', disabled: '#5C5147' },
+                        semantic: { success: '#4CAF72', warning: '#E8A020', error: '#D95454', info: '#4A90D9' }
+                    },
+                    fontFamily: {
+                        display: ['Syne', 'sans-serif'],
+                        body: ['"Space Grotesk"', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        *, *::before, *::after { box-sizing: border-box; }
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: #0D0D0D;
+            color: #F5F0E8;
+        }
+
+        /* Film grain overlay */
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+
+        /* Gradient text */
+        .text-gradient {
+            background: linear-gradient(135deg, #C4702A 0%, #E8914E 40%, #A87FD0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Animations */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(32px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .anim-up {
+            opacity: 0;
+            animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .anim-in {
+            opacity: 0;
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        @media (prefers-reduced-motion: reduce) {
+            .anim-up, .anim-in, .reveal { animation: none !important; opacity: 1 !important; transform: none !important; transition: none !important; }
+            .marquee-track { animation: none !important; }
+        }
+
+        /* Marquee */
+        @keyframes marquee {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+        .marquee-track {
+            animation: marquee 35s linear infinite;
+        }
+        .marquee-track:hover {
+            animation-play-state: paused;
+        }
+
+        /* Hero gradient */
+        .hero-gradient {
+            background:
+                radial-gradient(ellipse 70% 50% at 20% 50%, rgba(196,112,42,0.10) 0%, transparent 70%),
+                radial-gradient(ellipse 50% 40% at 80% 30%, rgba(123,79,166,0.08) 0%, transparent 60%),
+                radial-gradient(ellipse 40% 30% at 50% 80%, rgba(196,112,42,0.05) 0%, transparent 50%);
+        }
+
+        /* Glow border */
+        .glow-border {
+            position: relative;
+        }
+        .glow-border::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: inherit;
+            background: linear-gradient(135deg, rgba(196,112,42,0.4), rgba(123,79,166,0.4), rgba(196,112,42,0.1));
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .glow-border:hover::before { opacity: 1; }
+
+        /* Commission bars */
+        .commission-bar { transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
+        .commission-bar.animated { width: var(--target-width); }
+
+        /* CTA glow */
+        .cta-glow { transition: box-shadow 0.3s ease, transform 0.2s ease; }
+        .cta-glow:hover {
+            box-shadow: 0 0 32px 6px rgba(196,112,42,0.3);
+            transform: translateY(-1px);
+        }
+
+        /* Cards */
+        .card-hover { transition: transform 0.25s ease, border-color 0.25s ease; }
+        .card-hover:hover { transform: translateY(-4px); border-color: rgba(196,112,42,0.3); }
+
+        /* Placeholder art blocks */
+        .placeholder-art {
+            background: linear-gradient(135deg, #1A1A1A 0%, #262626 50%, #1A1A1A 100%);
+            display: flex; align-items: center; justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .placeholder-art::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(196,112,42,0.04) 0%, rgba(123,79,166,0.04) 100%);
+        }
+        .placeholder-art span {
+            color: #5C5147;
+            font-size: 0.7rem;
+            text-align: center;
+            padding: 1rem;
+            z-index: 1;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 0.02em;
+        }
+
+        /* Decorative line */
+        .accent-line {
+            width: 48px;
+            height: 3px;
+            background: linear-gradient(90deg, #C4702A, #7B4FA6);
+            border-radius: 2px;
+        }
+
+        /* Dual audience card active state */
+        .audience-card {
+            transition: border-color 0.3s ease, background-color 0.3s ease;
+        }
+        .audience-card:hover {
+            border-color: rgba(196,112,42,0.5);
+            background-color: rgba(26,26,26,0.8);
+        }
+
+        /* Medium chip */
+        .medium-chip {
+            border: 1px solid #333333;
+            transition: border-color 0.2s ease, color 0.2s ease;
+        }
+        .medium-chip:hover {
+            border-color: #C4702A;
+            color: #F5F0E8;
+        }
+    </style>
+</head>
+<body class="antialiased overflow-x-hidden">
+
+    <!-- ══════════════════════════════════════════════ -->
+    <!-- NAV                                           -->
+    <!-- ══════════════════════════════════════════════ -->
+    <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" id="nav">
+        <nav class="max-w-7xl mx-auto px-5 sm:px-8 py-4 flex items-center justify-between">
+            <a href="#" class="font-display font-bold text-2xl text-text-primary tracking-tight">Front<span class="text-brand-primary">Street</span></a>
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#for-you" class="text-sm text-text-secondary hover:text-text-primary transition-colors">For You</a>
+                <a href="#how-it-works" class="text-sm text-text-secondary hover:text-text-primary transition-colors">How It Works</a>
+                <a href="#compare" class="text-sm text-text-secondary hover:text-text-primary transition-colors">Compare</a>
+                <a href="#story" class="text-sm text-text-secondary hover:text-text-primary transition-colors">Our Story</a>
+                <a href="#join" class="bg-brand-primary hover:bg-brand-primary-dark text-text-primary text-sm font-semibold px-5 py-2.5 rounded-lg transition-all cta-glow">Get Early Access</a>
+            </div>
+            <button id="mobile-menu-btn" class="md:hidden text-text-primary p-2 -mr-2" aria-label="Open menu" aria-expanded="false">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="md:hidden hidden bg-surface-1/95 backdrop-blur-md border-t border-surface-2 px-5 py-5">
+            <div class="flex flex-col gap-1">
+                <a href="#for-you" class="text-text-secondary hover:text-text-primary transition-colors py-3 border-b border-surface-2">For You</a>
+                <a href="#how-it-works" class="text-text-secondary hover:text-text-primary transition-colors py-3 border-b border-surface-2">How It Works</a>
+                <a href="#compare" class="text-text-secondary hover:text-text-primary transition-colors py-3 border-b border-surface-2">Compare</a>
+                <a href="#story" class="text-text-secondary hover:text-text-primary transition-colors py-3 border-b border-surface-2">Our Story</a>
+                <a href="#join" class="bg-brand-primary text-text-primary text-center font-semibold px-5 py-3.5 rounded-lg mt-4">Get Early Access</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- ══════════════════════════════════════════════ -->
+        <!-- HERO                                          -->
+        <!-- ══════════════════════════════════════════════ -->
+        <section class="hero-gradient min-h-[100svh] flex items-center pt-24 pb-12 px-5 sm:px-8 relative">
+            <div class="max-w-7xl mx-auto w-full">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+                    <!-- Left: Copy -->
+                    <div>
+                        <div class="anim-up flex items-center gap-3 mb-8" style="animation-delay:0.1s">
+                            <div class="accent-line"></div>
+                            <span class="text-text-secondary font-mono text-xs tracking-widest uppercase">Boston, MA</span>
+                        </div>
+
+                        <h1 class="anim-up font-display font-extrabold text-[2.5rem] sm:text-[3.5rem] md:text-[4.2rem] lg:text-[4.5rem] leading-[1.05] tracking-tight mb-8" style="animation-delay:0.2s">
+                            Your art<br>deserves more<br>than a <span class="text-gradient">feed.</span>
+                        </h1>
+
+                        <p class="anim-up text-text-secondary text-lg sm:text-xl leading-relaxed mb-10 max-w-lg" style="animation-delay:0.35s">
+                            The home for Boston's Black artists and the collectors who champion them. One platform for your portfolio, your sales, your events — built by the community, for the community.
+                        </p>
+
+                        <!-- Email capture -->
+                        <div class="anim-up" style="animation-delay:0.5s">
+                            <form id="hero-form" class="flex flex-col sm:flex-row gap-3 max-w-md" onsubmit="handleWaitlist(event, this)">
+                                <input type="email" required placeholder="Your email address" class="flex-1 bg-surface-1 border border-surface-2 focus:border-brand-primary text-text-primary placeholder-text-disabled px-5 py-4 rounded-xl text-base outline-none transition-colors font-body" aria-label="Email address">
+                                <button type="submit" class="bg-brand-primary hover:bg-brand-primary-dark text-text-primary font-semibold px-7 py-4 rounded-xl transition-all cta-glow whitespace-nowrap text-base">
+                                    Get Early Access
+                                </button>
+                            </form>
+                            <p class="text-text-disabled text-xs mt-3 font-mono">Free forever. Be first in line when we launch.</p>
+                        </div>
+                    </div>
+
+                    <!-- Right: Founding Artists showcase -->
+                    <div class="anim-up hidden lg:block relative" style="animation-delay:0.5s">
+                        <div class="relative w-full max-w-md ml-auto">
+                            <div class="bg-surface-1 border border-surface-2 rounded-2xl p-5 shadow-2xl shadow-black/40 relative z-20">
+                                <div class="flex items-center justify-between mb-5">
+                                    <span class="font-display font-bold text-text-primary">Founding Artists</span>
+                                    <span class="text-[0.65rem] font-mono font-semibold text-brand-primary bg-brand-primary/10 px-2.5 py-1 rounded-full">BOSTON</span>
+                                </div>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div class="bg-surface-2 rounded-xl p-3 card-hover border border-transparent">
+                                        <img src="images/problak-headshot.jpg" alt="Problak — Boston muralist and founding FrontStreet artist" class="w-full aspect-square object-cover object-top rounded-lg mb-2.5">
+                                        <p class="font-display font-bold text-sm text-text-primary leading-tight">Problak</p>
+                                        <p class="text-text-secondary text-xs mt-0.5">Muralist</p>
+                                        <p class="text-text-disabled text-[0.6rem] font-mono mt-1">@problak</p>
+                                    </div>
+                                    <div class="bg-surface-2 rounded-xl p-3 card-hover border border-transparent">
+                                        <img src="images/ayana-mack-profile.jpg" alt="Ayana Mack — Boston painter and founding FrontStreet artist" class="w-full aspect-square object-cover object-top rounded-lg mb-2.5">
+                                        <p class="font-display font-bold text-sm text-text-primary leading-tight">Ayana Mack</p>
+                                        <p class="text-text-secondary text-xs mt-0.5">Painter</p>
+                                        <p class="text-text-disabled text-[0.6rem] font-mono mt-1">@ayanamack.co</p>
+                                    </div>
+                                    <div class="bg-surface-2 rounded-xl p-3 card-hover border border-transparent">
+                                        <img src="images/danice-marshall-studio.jpg" alt="Danice D. Marshall — Boston painter and founding FrontStreet artist" class="w-full aspect-square object-cover object-top rounded-lg mb-2.5">
+                                        <p class="font-display font-bold text-sm text-text-primary leading-tight">Danice D. Marshall</p>
+                                        <p class="text-text-secondary text-xs mt-0.5">Painter</p>
+                                        <p class="text-text-disabled text-[0.6rem] font-mono mt-1">@danice_d_marshall</p>
+                                    </div>
+                                    <div class="bg-surface-2 rounded-xl p-3 card-hover border border-transparent">
+                                        <img src="images/michael-talbot-profile.jpg" alt="Michael Talbot — Boston artist and founding FrontStreet artist" class="w-full aspect-square object-cover object-top rounded-lg mb-2.5">
+                                        <p class="font-display font-bold text-sm text-text-primary leading-tight">Michael Talbot</p>
+                                        <p class="text-text-secondary text-xs mt-0.5">Visual Artist</p>
+                                        <p class="text-text-disabled text-[0.6rem] font-mono mt-1">@talbotsart</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Event card behind -->
+                            <div class="absolute -bottom-6 -left-6 w-[85%] bg-surface-2 border border-surface-3 rounded-2xl p-4 z-10 opacity-60">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-lg bg-brand-accent/20 flex items-center justify-center flex-shrink-0">
+                                        <svg class="w-5 h-5 text-brand-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                                    </div>
+                                    <div>
+                                        <p class="font-display font-bold text-sm text-text-primary">Open Studio Night</p>
+                                        <p class="text-text-secondary text-xs">Nubian Square &middot; Sat, Aug 15</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Proof stats -->
+                <div class="anim-up mt-16 lg:mt-20 pt-8 border-t border-surface-2" style="animation-delay:0.65s">
+                    <div class="flex flex-wrap items-center gap-x-10 gap-y-4">
+                        <div>
+                            <span class="font-mono font-bold text-2xl text-text-primary">13K+</span>
+                            <p class="text-text-disabled text-xs mt-0.5">artist applications to BAMS Fest</p>
+                        </div>
+                        <div class="w-px h-8 bg-surface-2 hidden sm:block"></div>
+                        <div>
+                            <span class="font-mono font-bold text-2xl text-text-primary">180K</span>
+                            <p class="text-text-disabled text-xs mt-0.5">Black residents in Boston</p>
+                        </div>
+                        <div class="w-px h-8 bg-surface-2 hidden sm:block"></div>
+                        <div>
+                            <span class="font-mono font-bold text-2xl text-brand-primary">5–8%</span>
+                            <p class="text-text-disabled text-xs mt-0.5">commission — lowest in the market</p>
+                        </div>
+                        <div class="w-px h-8 bg-surface-2 hidden sm:block"></div>
+                        <div>
+                            <span class="font-mono font-bold text-2xl text-text-primary">0</span>
+                            <p class="text-text-disabled text-xs mt-0.5">platforms built for this community</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ══════════════════════════════════════════════ -->
+        <!-- MARQUEE — neighborhoods + mediums             -->
+        <!-- ══════════════════════════════════════════════ -->
+        <div class="py-5 bg-surface-1 border-y border-surface-2 overflow-hidden" aria-hidden="true">
+            <div class="marquee-track flex items-center gap-8 whitespace-nowrap w-max">
+                <span class="text-text-disabled text-sm font-display font-medium tracking-wide">ROXBURY</span>
+                <span class="text-brand-primary/40">&middot;</span>
+                <span class="text-text-disabled/60 text-sm">Painting</span>
+                <span class="text-brand-accent/40">&middot;</span>
+                <span class="text-text-disabled text-sm font-display font-medium tracking-wide">DORCHESTER</span>
+                <span class="text-brand-primary/40">&middot;</span>
+                <span class="text-text-disabled/60 text-sm">Photography</span>
+                <span class="text-brand-accent/40">&middot;</span>
+                <span class="text-text-disabled text-sm font-display font-medium tracking-wide">JAMAICA PLAIN</span>
+                <span class="text-brand-primary/40">&middot;</span>
+                <span class="text-text-disabled/60 text-sm">Mixed Media</span>
+                <span class="text-brand-accent/40">&middot;</span>
+                <span class="text-text-disabled text-sm font-display font-medium tracking-wide">SOUTH END</span>
+                <span class="text-brand-primary/40">&middot;</span>
+                <span class="text-text-disabled/60 text-sm">Sculpture</span>
+                <span class="text-brand-accent/40">&middot;</span>
+                <span class="text-text-disabled text-sm font-display font-medium tracking-wide">MATTAPAN</span>
+                <span class="text-brand-primary/40">&middot;</span>
+                <span class="text-text-disabled/60 text-sm">Illustration</span>
+                <span class="text-brand-accent/40">&middot;</span>
+                <span class="text-text-disabled text-sm font-display font-medium tracking-wide">CAMBRIDGE</span>
+                <span class="text-brand-primary/40">&middot;</span>
+                <span class="text-text-disabled/60 text-sm">Digital Art</span>
+                <span class="text-brand-accent/40">&middot;</span>
+                <span class="text-text-disabled text-sm font-display font-medium tracking-wide">NUBIAN SQUARE</span>
+                <span class="text-brand-primary/40">&middot;</span>
+                <span class="text-text-disabled/60 text-sm">Textile</span>
+                <span class="text-brand-accent/40">&middot;</span>
+                <!-- Duplicate for seamless loop -->
+                <span class="text-text-disabled text-sm font-display font-medium tracking-wide">ROXBURY</span>
+                <span class="text-brand-primary/40">&middot;</span>
+                <span class="text-text-disabled/60 text-sm">Painting</span>
+                <span class="text-brand-accent/40">&middot;</span>
+                <span class="text-text-disabled text-sm font-display font-medium tracking-wide">DORCHESTER</span>
+                <span class="text-brand-primary/40">&middot;</span>
+                <span class="text-text-disabled/60 text-sm">Photography</span>
+                <span class="text-brand-accent/40">&middot;</span>
+                <span class="text-text-disabled text-sm font-display font-medium tracking-wide">JAMAICA PLAIN</span>
+                <span class="text-brand-primary/40">&middot;</span>
+                <span class="text-text-disabled/60 text-sm">Mixed Media</span>
+                <span class="text-brand-accent/40">&middot;</span>
+                <span class="text-text-disabled text-sm font-display font-medium tracking-wide">SOUTH END</span>
+                <span class="text-brand-primary/40">&middot;</span>
+                <span class="text-text-disabled/60 text-sm">Sculpture</span>
+                <span class="text-brand-accent/40">&middot;</span>
+                <span class="text-text-disabled text-sm font-display font-medium tracking-wide">MATTAPAN</span>
+                <span class="text-brand-primary/40">&middot;</span>
+                <span class="text-text-disabled/60 text-sm">Illustration</span>
+                <span class="text-brand-accent/40">&middot;</span>
+                <span class="text-text-disabled text-sm font-display font-medium tracking-wide">CAMBRIDGE</span>
+                <span class="text-brand-primary/40">&middot;</span>
+                <span class="text-text-disabled/60 text-sm">Digital Art</span>
+                <span class="text-brand-accent/40">&middot;</span>
+                <span class="text-text-disabled text-sm font-display font-medium tracking-wide">NUBIAN SQUARE</span>
+                <span class="text-brand-primary/40">&middot;</span>
+                <span class="text-text-disabled/60 text-sm">Textile</span>
+                <span class="text-brand-accent/40">&middot;</span>
+            </div>
+        </div>
+
+
+        <!-- ══════════════════════════════════════════════ -->
+        <!-- DUAL AUDIENCE — For Artists / For Collectors  -->
+        <!-- ══════════════════════════════════════════════ -->
+        <section id="for-you" class="py-24 sm:py-32 px-5 sm:px-8">
+            <div class="max-w-7xl mx-auto">
+                <div class="reveal text-center max-w-2xl mx-auto mb-20">
+                    <div class="accent-line mx-auto mb-6"></div>
+                    <h2 class="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl tracking-tight leading-tight">
+                        Whether you <span class="text-gradient">create</span> the art<br>or <span class="text-gradient">collect</span> it.
+                    </h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- FOR ARTISTS -->
+                    <div class="reveal audience-card bg-surface-1 border border-surface-2 rounded-2xl p-8 sm:p-10">
+                        <span class="inline-block font-mono text-xs font-semibold tracking-widest text-brand-primary uppercase mb-6">For Artists</span>
+                        <h3 class="font-display font-bold text-2xl sm:text-3xl leading-tight mb-4">
+                            Stop losing 40% of every sale.
+                        </h3>
+                        <p class="text-text-secondary leading-relaxed mb-8">
+                            You've been duct-taping Instagram, Eventbrite, Etsy, and WhatsApp together — none of which were built for you. FrontStreet gives you a professional portfolio, direct sales, and event listings in one app. Keep 92–95% of every sale.
+                        </p>
+                        <div class="space-y-4 mb-8">
+                            <div class="flex items-start gap-3">
+                                <div class="w-6 h-6 rounded-full bg-brand-primary/15 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <svg class="w-3.5 h-3.5 text-brand-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                                </div>
+                                <span class="text-text-secondary text-sm">Professional profile with portfolio grid, not a social media page</span>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <div class="w-6 h-6 rounded-full bg-brand-primary/15 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <svg class="w-3.5 h-3.5 text-brand-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                                </div>
+                                <span class="text-text-secondary text-sm">Direct sales at <span class="text-text-primary font-semibold">5–8% commission</span> via Stripe — money goes to you</span>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <div class="w-6 h-6 rounded-full bg-brand-primary/15 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <svg class="w-3.5 h-3.5 text-brand-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                                </div>
+                                <span class="text-text-secondary text-sm">Event listings with ticketing at 3% + $0.50 — not Eventbrite's 14%</span>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <div class="w-6 h-6 rounded-full bg-brand-primary/15 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <svg class="w-3.5 h-3.5 text-brand-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                                </div>
+                                <span class="text-text-secondary text-sm">No gallery representation required — list directly, get discovered locally</span>
+                            </div>
+                        </div>
+                        <a href="#join" class="inline-flex items-center gap-2 bg-brand-primary hover:bg-brand-primary-dark text-text-primary font-semibold px-6 py-3.5 rounded-xl transition-all cta-glow text-sm">
+                            I'm an Artist — Join as a Founder
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                        </a>
+                    </div>
+
+                    <!-- FOR COLLECTORS -->
+                    <div class="reveal audience-card bg-surface-1 border border-surface-2 rounded-2xl p-8 sm:p-10" style="transition-delay: 0.1s">
+                        <span class="inline-block font-mono text-xs font-semibold tracking-widest text-brand-accent uppercase mb-6">For Collectors & Patrons</span>
+                        <h3 class="font-display font-bold text-2xl sm:text-3xl leading-tight mb-4">
+                            Discover what Instagram hides from you.
+                        </h3>
+                        <p class="text-text-secondary leading-relaxed mb-8">
+                            Boston has one of the most vibrant Black art communities in the country — but you'd never know it scrolling a global feed. FrontStreet puts every artist, every available piece, and every upcoming event in one place. Buy directly. No gallery markup.
+                        </p>
+                        <div class="space-y-4 mb-8">
+                            <div class="flex items-start gap-3">
+                                <div class="w-6 h-6 rounded-full bg-brand-accent/15 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <svg class="w-3.5 h-3.5 text-brand-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                                </div>
+                                <span class="text-text-secondary text-sm">Browse Boston's Black artists by medium, neighborhood, and availability</span>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <div class="w-6 h-6 rounded-full bg-brand-accent/15 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <svg class="w-3.5 h-3.5 text-brand-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                                </div>
+                                <span class="text-text-secondary text-sm">Buy original work directly — <span class="text-text-primary font-semibold">no gallery commissions</span>, just artist-to-collector</span>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <div class="w-6 h-6 rounded-full bg-brand-accent/15 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <svg class="w-3.5 h-3.5 text-brand-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                                </div>
+                                <span class="text-text-secondary text-sm">Find exhibitions, open studios, and pop-ups you'll never see on Eventbrite</span>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <div class="w-6 h-6 rounded-full bg-brand-accent/15 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <svg class="w-3.5 h-3.5 text-brand-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                                </div>
+                                <span class="text-text-secondary text-sm">Know your purchase directly supports the artist and the community</span>
+                            </div>
+                        </div>
+                        <a href="#join" class="inline-flex items-center gap-2 bg-surface-2 hover:bg-surface-3 border border-surface-3 text-text-primary font-semibold px-6 py-3.5 rounded-xl transition-all text-sm">
+                            I'm a Collector — Get Early Access
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ══════════════════════════════════════════════ -->
+        <!-- PROBLEM — The broken stack                    -->
+        <!-- ══════════════════════════════════════════════ -->
+        <section class="py-24 sm:py-32 px-5 sm:px-8 bg-surface-1">
+            <div class="max-w-7xl mx-auto">
+                <div class="reveal max-w-3xl mb-16">
+                    <span class="font-mono text-xs font-semibold tracking-widest text-brand-primary uppercase">The Status Quo</span>
+                    <h2 class="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl tracking-tight leading-tight mt-4 mb-6">
+                        Four tools. Zero integration.<br>
+                        <span class="text-text-secondary">And they all take a cut.</span>
+                    </h2>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="reveal card-hover bg-surface-0 border border-surface-2 rounded-2xl p-7 flex gap-5" style="transition-delay:0.05s">
+                        <div class="w-12 h-12 rounded-xl bg-surface-2 flex items-center justify-center flex-shrink-0">
+                            <svg class="w-6 h-6 text-text-disabled" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                        </div>
+                        <div>
+                            <h3 class="font-display font-bold text-text-primary text-lg mb-1">Instagram</h3>
+                            <p class="text-text-secondary text-sm leading-relaxed">Your "portfolio" — but the algorithm suppresses Black creators, offers no sales tools, and has zero event infrastructure.</p>
+                        </div>
+                    </div>
+                    <div class="reveal card-hover bg-surface-0 border border-surface-2 rounded-2xl p-7 flex gap-5" style="transition-delay:0.1s">
+                        <div class="w-12 h-12 rounded-xl bg-surface-2 flex items-center justify-center flex-shrink-0">
+                            <svg class="w-6 h-6 text-text-disabled" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"/></svg>
+                        </div>
+                        <div>
+                            <h3 class="font-display font-bold text-text-primary text-lg mb-1">Eventbrite</h3>
+                            <p class="text-text-secondary text-sm leading-relaxed">Takes <span class="font-mono text-semantic-error font-semibold">10–14%</span> on every ticket. For a $20 community event, that's $3.53 gone before you start.</p>
+                        </div>
+                    </div>
+                    <div class="reveal card-hover bg-surface-0 border border-surface-2 rounded-2xl p-7 flex gap-5" style="transition-delay:0.15s">
+                        <div class="w-12 h-12 rounded-xl bg-surface-2 flex items-center justify-center flex-shrink-0">
+                            <svg class="w-6 h-6 text-text-disabled" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                        </div>
+                        <div>
+                            <h3 class="font-display font-bold text-text-primary text-lg mb-1">Saatchi Art / Etsy</h3>
+                            <p class="text-text-secondary text-sm leading-relaxed">Saatchi takes <span class="font-mono text-semantic-error font-semibold">40%</span> of every sale. Etsy buries original work in a sea of mass-produced prints.</p>
+                        </div>
+                    </div>
+                    <div class="reveal card-hover bg-surface-0 border border-surface-2 rounded-2xl p-7 flex gap-5" style="transition-delay:0.2s">
+                        <div class="w-12 h-12 rounded-xl bg-surface-2 flex items-center justify-center flex-shrink-0">
+                            <svg class="w-6 h-6 text-text-disabled" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+                        </div>
+                        <div>
+                            <h3 class="font-display font-bold text-text-primary text-lg mb-1">DMs & WhatsApp</h3>
+                            <p class="text-text-secondary text-sm leading-relaxed">Selling original art through Instagram DMs. No invoicing, no records, no collector relationship management.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal mt-12 bg-surface-2/50 border border-surface-2 rounded-2xl p-6 sm:p-8 max-w-3xl">
+                    <p class="text-text-secondary text-base leading-relaxed">
+                        "Black artists represent just <span class="text-text-primary font-bold">1.2%</span> of works in major US museum collections — despite comprising 13% of the population. Predominantly white institutions capture <span class="text-text-primary font-bold">60%</span> of all arts funding."
+                    </p>
+                    <p class="text-text-disabled text-xs mt-4 font-mono">Williams College / PLOS ONE &middot; Artnet/Burns Halperin Analysis</p>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ══════════════════════════════════════════════ -->
+        <!-- HOW IT WORKS — preview of the platform        -->
+        <!-- ══════════════════════════════════════════════ -->
+        <section id="how-it-works" class="py-24 sm:py-32 px-5 sm:px-8">
+            <div class="max-w-7xl mx-auto">
+                <div class="reveal text-center max-w-2xl mx-auto mb-20">
+                    <div class="accent-line mx-auto mb-6"></div>
+                    <h2 class="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl tracking-tight leading-tight mb-4">
+                        Everything in one place.
+                    </h2>
+                    <p class="text-text-secondary text-lg">Portfolio. Sales. Events. Discovery. Built for Boston.</p>
+                </div>
+
+                <!-- Feature rows: alternating layout -->
+                <div class="space-y-16 lg:space-y-24">
+                    <!-- 1. Portfolio -->
+                    <div class="reveal grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+                        <div class="aspect-[4/3] rounded-2xl overflow-hidden">
+                            <img src="images/fs2c-installation.jpg" alt="George Freeman (FromStreet2Canvas) with his Freedom Fighters painting series at a gallery installation" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <span class="font-mono text-xs font-semibold tracking-widest text-brand-primary uppercase">Replaces Instagram</span>
+                            <h3 class="font-display font-bold text-2xl sm:text-3xl leading-tight mt-3 mb-4">Your portfolio, not a social profile.</h3>
+                            <p class="text-text-secondary leading-relaxed mb-6">
+                                A customizable artist page with cover image, bio, medium tags, and a gallery-quality portfolio grid. Collectors see your best work first — no algorithm in the way.
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="medium-chip text-text-disabled text-xs px-3 py-1.5 rounded-full">Cover image</span>
+                                <span class="medium-chip text-text-disabled text-xs px-3 py-1.5 rounded-full">Bio & statement</span>
+                                <span class="medium-chip text-text-disabled text-xs px-3 py-1.5 rounded-full">Medium tags</span>
+                                <span class="medium-chip text-text-disabled text-xs px-3 py-1.5 rounded-full">Portfolio grid</span>
+                                <span class="medium-chip text-text-disabled text-xs px-3 py-1.5 rounded-full">Follower count</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. Sales -->
+                    <div class="reveal grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+                        <div class="order-1 lg:order-2 aspect-[4/3] rounded-2xl overflow-hidden">
+                            <img src="images/ayana-mack-artwork.jpg" alt="Colored pencil portrait by Ayana Mack — the kind of original work you'll find on FrontStreet" class="w-full h-full object-cover">
+                        </div>
+                        <div class="order-2 lg:order-1">
+                            <span class="font-mono text-xs font-semibold tracking-widest text-brand-primary uppercase">Replaces Etsy & Saatchi</span>
+                            <h3 class="font-display font-bold text-2xl sm:text-3xl leading-tight mt-3 mb-4">Sell directly. Keep what you earn.</h3>
+                            <p class="text-text-secondary leading-relaxed mb-6">
+                                Up to 5 photos per piece with title, medium, dimensions, year, and price. Collectors buy or inquire with one tap. Stripe handles payments — you never wait for the platform to release your money.
+                            </p>
+                            <div class="bg-surface-1 border border-surface-2 rounded-xl p-5 inline-block">
+                                <div class="flex items-baseline gap-3">
+                                    <span class="font-mono font-bold text-2xl text-brand-primary">$950</span>
+                                    <span class="text-text-disabled text-sm">you keep on a $1,000 sale</span>
+                                </div>
+                                <div class="flex items-baseline gap-3 mt-1">
+                                    <span class="font-mono font-bold text-2xl text-text-disabled line-through decoration-semantic-error/50">$600</span>
+                                    <span class="text-text-disabled text-sm">on Saatchi Art (40% commission)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. Events -->
+                    <div class="reveal grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+                        <div class="aspect-[4/3] rounded-2xl overflow-hidden">
+                            <img src="images/art-event-crowd.jpg" alt="A packed art event in Boston — the kind of community gathering FrontStreet powers" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <span class="font-mono text-xs font-semibold tracking-widest text-brand-accent uppercase">Replaces Eventbrite</span>
+                            <h3 class="font-display font-bold text-2xl sm:text-3xl leading-tight mt-3 mb-4">Your exhibitions. Your pop-ups. Your crowd.</h3>
+                            <p class="text-text-secondary leading-relaxed mb-6">
+                                A community calendar for everything happening in Boston's Black art scene — exhibitions, open studios, workshops, gallery openings. Ticketing at 3% + $0.50 because community events shouldn't lose 14% to Eventbrite.
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="text-xs font-medium text-brand-accent bg-brand-accent/10 px-3 py-1.5 rounded-full">Exhibition</span>
+                                <span class="text-xs font-medium text-brand-accent bg-brand-accent/10 px-3 py-1.5 rounded-full">Pop-Up</span>
+                                <span class="text-xs font-medium text-brand-accent bg-brand-accent/10 px-3 py-1.5 rounded-full">Open Studio</span>
+                                <span class="text-xs font-medium text-brand-accent bg-brand-accent/10 px-3 py-1.5 rounded-full">Workshop</span>
+                                <span class="text-xs font-medium text-brand-accent bg-brand-accent/10 px-3 py-1.5 rounded-full">Mixer</span>
+                            </div>
+                            <span class="inline-block mt-4 text-brand-accent-light text-xs font-mono">Events launching in v2</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ══════════════════════════════════════════════ -->
+        <!-- COMMISSION COMPARISON                         -->
+        <!-- ══════════════════════════════════════════════ -->
+        <section id="compare" class="py-24 sm:py-32 px-5 sm:px-8 bg-surface-1">
+            <div class="max-w-7xl mx-auto">
+                <div class="reveal text-center max-w-2xl mx-auto mb-6">
+                    <span class="font-mono text-xs font-semibold tracking-widest text-brand-primary uppercase">Keep What You Earn</span>
+                    <h2 class="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl tracking-tight leading-tight mt-4 mb-4">
+                        You sell a piece for <span class="font-mono text-brand-primary">$1,000.</span>
+                    </h2>
+                    <p class="text-text-secondary text-lg">Here's what each platform lets you keep — and what they take.</p>
+                </div>
+
+                <!-- Legend -->
+                <div class="reveal flex items-center justify-center gap-6 mb-12 text-xs">
+                    <div class="flex items-center gap-2">
+                        <div class="w-3 h-3 rounded-sm bg-brand-primary"></div>
+                        <span class="text-text-secondary">You keep</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <div class="w-3 h-3 rounded-sm bg-semantic-error/60"></div>
+                        <span class="text-text-secondary">Platform takes</span>
+                    </div>
+                </div>
+
+                <div class="max-w-3xl mx-auto space-y-5">
+
+                    <!-- FrontStreet — the hero row -->
+                    <div class="reveal bg-surface-0 border border-brand-primary/30 rounded-2xl p-6 sm:p-7">
+                        <div class="flex flex-wrap items-baseline justify-between gap-2 mb-4">
+                            <span class="font-display font-bold text-lg text-text-primary">FrontStreet</span>
+                            <div class="flex items-baseline gap-3">
+                                <span class="font-mono font-bold text-2xl sm:text-3xl text-brand-primary">$920–$950</span>
+                                <span class="text-text-disabled text-xs">you keep</span>
+                            </div>
+                        </div>
+                        <!-- Split bar: 93% keep / 7% taken -->
+                        <div class="w-full flex rounded-full h-10 overflow-hidden">
+                            <div class="commission-bar h-full flex items-center justify-center rounded-l-full" style="width: 0; --target-width: 93%; background: linear-gradient(90deg, #9E5720, #C4702A, #E8914E);">
+                                <span class="text-xs font-bold text-surface-0">You keep 92–95%</span>
+                            </div>
+                            <div class="commission-bar h-full bg-surface-2 flex items-center justify-center rounded-r-full" style="width: 0; --target-width: 7%;">
+                            </div>
+                        </div>
+                        <p class="text-text-disabled text-xs mt-3 font-mono">5–8% commission &middot; No gallery required &middot; No monthly fee</p>
+                    </div>
+
+                    <!-- Artsy -->
+                    <div class="reveal bg-surface-0 border border-surface-2 rounded-2xl p-6 sm:p-7" style="transition-delay:0.05s">
+                        <div class="flex flex-wrap items-baseline justify-between gap-2 mb-3">
+                            <span class="font-display font-semibold text-lg text-text-secondary">Artsy</span>
+                            <div class="flex items-baseline gap-3">
+                                <span class="font-mono font-semibold text-xl text-text-secondary">$850–$900</span>
+                                <span class="text-semantic-error text-xs font-mono font-semibold">−$100–$150 lost</span>
+                            </div>
+                        </div>
+                        <p class="text-text-disabled text-xs mb-3 font-mono">10–15% commission &middot; Requires gallery at $425+/mo</p>
+                    </div>
+
+                    <!-- Etsy -->
+                    <div class="reveal bg-surface-0 border border-surface-2 rounded-2xl p-6 sm:p-7" style="transition-delay:0.1s">
+                        <div class="flex flex-wrap items-baseline justify-between gap-2 mb-3">
+                            <span class="font-display font-semibold text-lg text-text-secondary">Etsy</span>
+                            <div class="flex items-baseline gap-3">
+                                <span class="font-mono font-semibold text-xl text-text-secondary">$870–$900</span>
+                                <span class="text-semantic-error text-xs font-mono font-semibold">−$100–$130 lost</span>
+                            </div>
+                        </div>
+                        <p class="text-text-disabled text-xs mb-3 font-mono">10–13% effective fee &middot; Buried in mass-produced inventory</p>
+                    </div>
+
+                    <!-- Saatchi Art — the villain row -->
+                    <div class="reveal bg-surface-0 border border-semantic-error/20 rounded-2xl p-6 sm:p-7" style="transition-delay:0.15s">
+                        <div class="flex flex-wrap items-baseline justify-between gap-2 mb-3">
+                            <span class="font-display font-semibold text-lg text-text-secondary">Saatchi Art</span>
+                            <div class="flex items-baseline gap-3">
+                                <span class="font-mono font-semibold text-xl text-text-secondary">$600</span>
+                                <span class="text-semantic-error text-sm font-mono font-bold">−$400 lost</span>
+                            </div>
+                        </div>
+                        <p class="text-text-disabled text-xs mb-3 font-mono">40% commission &middot; Global undifferentiated marketplace</p>
+                    </div>
+
+                    <!-- Artfinder — the worst row -->
+                    <div class="reveal bg-surface-0 border border-semantic-error/20 rounded-2xl p-6 sm:p-7" style="transition-delay:0.2s">
+                        <div class="flex flex-wrap items-baseline justify-between gap-2 mb-3">
+                            <span class="font-display font-semibold text-lg text-text-secondary">Artfinder</span>
+                            <div class="flex items-baseline gap-3">
+                                <span class="font-mono font-semibold text-xl text-text-secondary">$550–$600</span>
+                                <span class="text-semantic-error text-sm font-mono font-bold">−$400–$450 lost</span>
+                            </div>
+                        </div>
+                        <p class="text-text-disabled text-xs mb-3 font-mono">40–45% commission &middot; No local community focus</p>
+                    </div>
+
+                </div>
+
+                <div class="reveal text-center mt-10">
+                    <p class="text-text-secondary text-sm max-w-lg mx-auto">
+                        On 10 sales at $1,000 each, you'd lose <span class="font-mono font-bold text-semantic-error">$4,000</span> to Saatchi Art. On FrontStreet, you'd lose <span class="font-mono font-bold text-brand-primary">$500–$800</span>. That's the difference.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ══════════════════════════════════════════════ -->
+        <!-- FOUNDER STORY                                 -->
+        <!-- ══════════════════════════════════════════════ -->
+        <section id="story" class="py-24 sm:py-32 px-5 sm:px-8">
+            <div class="max-w-7xl mx-auto">
+                <div class="reveal grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-16 items-center max-w-5xl mx-auto">
+                    <div class="lg:col-span-2">
+                        <div class="aspect-[3/4] rounded-2xl overflow-hidden max-w-sm mx-auto lg:mx-0">
+                            <img src="images/george-freeman-profile.jpg" alt="George Freeman — Boston artist, founder of FrontStreet, and Embrace Boston E250 Living Archive Featured Artist" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                    <div class="lg:col-span-3">
+                        <div class="accent-line mb-6"></div>
+                        <p class="text-text-disabled text-xs font-mono mb-4">@fromstreet2canvas</p>
+                        <h2 class="font-display font-extrabold text-3xl sm:text-4xl leading-tight mb-6">
+                            "I didn't build this for a<br>market segment."
+                        </h2>
+                        <div class="space-y-5 text-text-secondary leading-relaxed text-lg">
+                            <p>
+                                I'm <span class="text-text-primary font-semibold">George Freeman</span> — a Boston artist, not a tech founder who read a trend report. I was recently recognized as an <span class="text-brand-primary font-semibold">Embrace Boston MLK Honors E250 Living Archive Featured Artist</span>. I have a City of Boston Vendor ID, a Mayor's Office of Art & Culture certification, and I've been featured on CBS Boston.
+                            </p>
+                            <p>
+                                I know which galleries don't return calls. I know which events lack digital infrastructure. I know because I've lived it. Every Black artist I know in Boston is managing the same broken stack of tools. We deserve something built for us, by one of us.
+                            </p>
+                        </div>
+                        <div class="flex flex-wrap gap-3 mt-8">
+                            <span class="text-xs font-mono font-medium text-brand-primary bg-brand-primary/10 border border-brand-primary/20 px-4 py-2 rounded-full">Embrace Boston MLK Honors — E250 Living Archive</span>
+                            <span class="text-xs font-mono font-medium text-text-secondary bg-surface-1 border border-surface-2 px-4 py-2 rounded-full">City of Boston Vendor ID</span>
+                            <span class="text-xs font-mono font-medium text-text-secondary bg-surface-1 border border-surface-2 px-4 py-2 rounded-full">Mayor's Office Certified</span>
+                            <span class="text-xs font-mono font-medium text-text-secondary bg-surface-1 border border-surface-2 px-4 py-2 rounded-full">CBS Boston Feature</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ══════════════════════════════════════════════ -->
+        <!-- COMMUNITY VALIDATION — big numbers            -->
+        <!-- ══════════════════════════════════════════════ -->
+        <section class="py-24 sm:py-32 px-5 sm:px-8 bg-surface-1 relative overflow-hidden">
+            <!-- Decorative background text -->
+            <div class="absolute inset-0 flex items-center justify-center pointer-events-none select-none" aria-hidden="true">
+                <span class="font-display font-extrabold text-[12rem] sm:text-[18rem] md:text-[24rem] text-surface-2/30 leading-none">BOS</span>
+            </div>
+
+            <div class="max-w-7xl mx-auto relative z-10">
+                <div class="reveal text-center max-w-2xl mx-auto mb-20">
+                    <span class="font-mono text-xs font-semibold tracking-widest text-brand-primary uppercase">Boston's Black Art Scene</span>
+                    <h2 class="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl tracking-tight leading-tight mt-4">
+                        The demand is proven.<br>
+                        <span class="text-text-secondary">The infrastructure isn't.</span>
+                    </h2>
+                </div>
+
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+                    <div class="reveal text-center">
+                        <p class="font-mono font-bold text-4xl sm:text-5xl md:text-6xl text-brand-primary leading-none" data-count="10600">0</p>
+                        <p class="text-text-secondary text-sm mt-3">BAMS Fest attendees</p>
+                        <p class="text-text-disabled text-xs mt-1">Up from 2,200 in 2018</p>
+                    </div>
+                    <div class="reveal text-center" style="transition-delay:0.05s">
+                        <p class="font-mono font-bold text-4xl sm:text-5xl md:text-6xl text-brand-primary leading-none" data-count="15000">0</p>
+                        <p class="text-text-secondary text-sm mt-3">Artist applications</p>
+                        <p class="text-text-disabled text-xs mt-1">With no digital platform</p>
+                    </div>
+                    <div class="reveal text-center" style="transition-delay:0.1s">
+                        <p class="font-mono font-bold text-4xl sm:text-5xl md:text-6xl text-brand-accent leading-none">82<span class="text-3xl md:text-4xl">%</span></p>
+                        <p class="text-text-secondary text-sm mt-3">Young collectors buy online</p>
+                        <p class="text-text-disabled text-xs mt-1">Art Basel/UBS 2025</p>
+                    </div>
+                    <div class="reveal text-center" style="transition-delay:0.15s">
+                        <p class="font-mono font-bold text-4xl sm:text-5xl md:text-6xl text-brand-accent leading-none">60<span class="text-3xl md:text-4xl">+</span></p>
+                        <p class="text-text-secondary text-sm mt-3">Minority-owned businesses</p>
+                        <p class="text-text-disabled text-xs mt-1">Supported by BAMS Fest</p>
+                    </div>
+                </div>
+
+                <div class="reveal mt-20 flex flex-wrap justify-center items-center gap-x-6 gap-y-3">
+                    <span class="text-text-disabled text-xs font-mono uppercase tracking-wider">Ecosystem Partners</span>
+                    <span class="text-surface-3">|</span>
+                    <span class="text-text-disabled/60 text-sm">BAMS Fest</span>
+                    <span class="text-text-disabled/60 text-sm">NCAAA</span>
+                    <span class="text-text-disabled/60 text-sm">Artists for Humanity</span>
+                    <span class="text-text-disabled/60 text-sm">GRACC</span>
+                    <span class="text-text-disabled/60 text-sm">Castle of our Skins</span>
+                    <span class="text-text-disabled/60 text-sm">AAMARP</span>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ══════════════════════════════════════════════ -->
+        <!-- FAQ                                           -->
+        <!-- ══════════════════════════════════════════════ -->
+        <section class="py-24 sm:py-32 px-5 sm:px-8">
+            <div class="max-w-3xl mx-auto">
+                <div class="reveal text-center mb-14">
+                    <h2 class="font-display font-extrabold text-3xl sm:text-4xl tracking-tight">Common questions.</h2>
+                </div>
+
+                <div class="space-y-3" id="faq">
+                    <div class="reveal faq-item bg-surface-1 border border-surface-2 rounded-xl overflow-hidden">
+                        <button class="faq-toggle w-full text-left px-6 py-5 flex items-center justify-between gap-4" aria-expanded="false">
+                            <span class="font-display font-semibold text-text-primary">Is FrontStreet free for artists?</span>
+                            <svg class="faq-icon w-5 h-5 text-text-secondary flex-shrink-0 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div class="faq-content hidden px-6 pb-5">
+                            <p class="text-text-secondary text-sm leading-relaxed">Yes. Creating a profile, uploading your portfolio, and being discovered by collectors is completely free. We only earn when you earn — a 5–8% commission on sales, the lowest in the market. An optional Pro tier ($7/mo) adds priority placement and analytics.</p>
+                        </div>
+                    </div>
+                    <div class="reveal faq-item bg-surface-1 border border-surface-2 rounded-xl overflow-hidden" style="transition-delay:0.03s">
+                        <button class="faq-toggle w-full text-left px-6 py-5 flex items-center justify-between gap-4" aria-expanded="false">
+                            <span class="font-display font-semibold text-text-primary">When does FrontStreet launch?</span>
+                            <svg class="faq-icon w-5 h-5 text-text-secondary flex-shrink-0 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div class="faq-content hidden px-6 pb-5">
+                            <p class="text-text-secondary text-sm leading-relaxed">We're building the first version now and onboarding our founding cohort of Boston artists. Join the waitlist to get early access — founding members shape the platform before it opens to the public.</p>
+                        </div>
+                    </div>
+                    <div class="reveal faq-item bg-surface-1 border border-surface-2 rounded-xl overflow-hidden" style="transition-delay:0.06s">
+                        <button class="faq-toggle w-full text-left px-6 py-5 flex items-center justify-between gap-4" aria-expanded="false">
+                            <span class="font-display font-semibold text-text-primary">Do I need gallery representation?</span>
+                            <svg class="faq-icon w-5 h-5 text-text-secondary flex-shrink-0 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div class="faq-content hidden px-6 pb-5">
+                            <p class="text-text-secondary text-sm leading-relaxed">No. Artsy requires gallery representation at $425+/month. FrontStreet requires a Boston connection and original work. Artists list and sell directly — no middleman, no gatekeeping.</p>
+                        </div>
+                    </div>
+                    <div class="reveal faq-item bg-surface-1 border border-surface-2 rounded-xl overflow-hidden" style="transition-delay:0.09s">
+                        <button class="faq-toggle w-full text-left px-6 py-5 flex items-center justify-between gap-4" aria-expanded="false">
+                            <span class="font-display font-semibold text-text-primary">I'm a collector. Is this for me?</span>
+                            <svg class="faq-icon w-5 h-5 text-text-secondary flex-shrink-0 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div class="faq-content hidden px-6 pb-5">
+                            <p class="text-text-secondary text-sm leading-relaxed">Absolutely. FrontStreet is the easiest way to discover and buy directly from Black artists in Boston. No gallery markup, direct relationships with artists, and the knowledge that your purchase supports the community at the most artist-friendly rates in the market.</p>
+                        </div>
+                    </div>
+                    <div class="reveal faq-item bg-surface-1 border border-surface-2 rounded-xl overflow-hidden" style="transition-delay:0.12s">
+                        <button class="faq-toggle w-full text-left px-6 py-5 flex items-center justify-between gap-4" aria-expanded="false">
+                            <span class="font-display font-semibold text-text-primary">Does FrontStreet hold my money?</span>
+                            <svg class="faq-icon w-5 h-5 text-text-secondary flex-shrink-0 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div class="faq-content hidden px-6 pb-5">
+                            <p class="text-text-secondary text-sm leading-relaxed">Never. Payments go through Stripe — the same infrastructure used by Shopify and Amazon. When your work sells, Stripe deposits your earnings directly into your bank account. FrontStreet never touches your money.</p>
+                        </div>
+                    </div>
+                    <div class="reveal faq-item bg-surface-1 border border-surface-2 rounded-xl overflow-hidden" style="transition-delay:0.15s">
+                        <button class="faq-toggle w-full text-left px-6 py-5 flex items-center justify-between gap-4" aria-expanded="false">
+                            <span class="font-display font-semibold text-text-primary">Why only Boston?</span>
+                            <svg class="faq-icon w-5 h-5 text-text-secondary flex-shrink-0 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div class="faq-content hidden px-6 pb-5">
+                            <p class="text-text-secondary text-sm leading-relaxed">Hyper-local is how you build something real. A collector in Jamaica Plain and an artist in Roxbury share a community — that's powerful. We start in Boston because it's home. Getting it right here creates the playbook for Atlanta, Brooklyn, and Chicago next.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ══════════════════════════════════════════════ -->
+        <!-- FINAL CTA                                     -->
+        <!-- ══════════════════════════════════════════════ -->
+        <section id="join" class="py-24 sm:py-32 px-5 sm:px-8 relative overflow-hidden">
+            <!-- Gradient bg -->
+            <div class="absolute inset-0 bg-gradient-to-b from-surface-0 via-surface-1 to-surface-0"></div>
+            <div class="absolute inset-0" style="background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(196,112,42,0.08) 0%, transparent 70%);"></div>
+
+            <div class="max-w-2xl mx-auto text-center relative z-10">
+                <div class="reveal">
+                    <div class="accent-line mx-auto mb-8"></div>
+                    <h2 class="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl tracking-tight leading-[1.05] mb-6">
+                        Your art deserves<br>a <span class="text-gradient">home.</span>
+                    </h2>
+                    <p class="text-text-secondary text-lg leading-relaxed mb-10 max-w-md mx-auto">
+                        Become a founding member — help shape FrontStreet before it opens to the public.
+                    </p>
+
+                    <form id="final-form" class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto" onsubmit="handleWaitlist(event, this)">
+                        <input type="email" required placeholder="Your email address" class="flex-1 bg-surface-1 border border-surface-2 focus:border-brand-primary text-text-primary placeholder-text-disabled px-5 py-4 rounded-xl text-base outline-none transition-colors font-body" aria-label="Email address">
+                        <button type="submit" class="bg-brand-primary hover:bg-brand-primary-dark text-text-primary font-semibold px-7 py-4 rounded-xl transition-all cta-glow whitespace-nowrap text-base">
+                            Be First In Line
+                        </button>
+                    </form>
+                    <p class="text-text-disabled text-xs mt-4 font-mono">Free forever. No spam. Artists & collectors welcome.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+
+    <!-- ══════════════════════════════════════════════ -->
+    <!-- FOOTER                                        -->
+    <!-- ══════════════════════════════════════════════ -->
+    <footer class="py-12 px-5 sm:px-8 border-t border-surface-2">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-6">
+                <div>
+                    <a href="#" class="font-display font-bold text-xl text-text-primary">Front<span class="text-brand-primary">Street</span></a>
+                    <p class="text-text-disabled text-xs mt-1">The home for Boston's Black artists.</p>
+                </div>
+                <div class="flex items-center gap-6">
+                    <a href="https://www.instagram.com/frontstreetapp" target="_blank" rel="noopener noreferrer" class="text-text-secondary hover:text-text-primary transition-colors" aria-label="FrontStreet on Instagram">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                    </a>
+                    <a href="mailto:george@frontstreetapp.com" class="text-text-secondary hover:text-text-primary transition-colors" aria-label="Email FrontStreet">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="mt-8 pt-6 border-t border-surface-2 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <p class="text-text-disabled text-xs">&copy; 2026 FromStreet2Canvas LLC. All rights reserved.</p>
+                <div class="flex items-center gap-4 text-text-disabled text-xs">
+                    <span>frontstreetapp.com</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- Mobile sticky CTA -->
+    <div id="mobile-sticky-cta" class="fixed bottom-0 left-0 right-0 bg-surface-0/95 backdrop-blur-md border-t border-surface-2 p-3 z-40 md:hidden translate-y-full transition-transform duration-300">
+        <a href="#join" class="block bg-brand-primary text-text-primary text-center font-semibold py-3.5 rounded-xl font-display">
+            Get Early Access
+        </a>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════════ -->
+    <!-- JAVASCRIPT                                    -->
+    <!-- ══════════════════════════════════════════════ -->
+    <script>
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        // Mobile menu
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        menuBtn.addEventListener('click', () => {
+            const isHidden = mobileMenu.classList.toggle('hidden');
+            menuBtn.setAttribute('aria-expanded', !isHidden);
+        });
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                menuBtn.setAttribute('aria-expanded', 'false');
+            });
+        });
+
+        // Nav bg on scroll
+        const nav = document.getElementById('nav');
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+            const y = window.scrollY;
+            if (y > 40) {
+                nav.classList.add('bg-surface-0/95', 'backdrop-blur-md', 'border-b', 'border-surface-2');
+            } else {
+                nav.classList.remove('bg-surface-0/95', 'backdrop-blur-md', 'border-b', 'border-surface-2');
+            }
+            lastScroll = y;
+        }, { passive: true });
+
+        // Scroll reveal
+        if (!prefersReducedMotion) {
+            const revealObs = new IntersectionObserver((entries) => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); }
+                });
+            }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+            document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+        } else {
+            document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+        }
+
+        // Commission bar animation
+        const barObs = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) { e.target.classList.add('animated'); barObs.unobserve(e.target); }
+            });
+        }, { threshold: 0.2 });
+        document.querySelectorAll('.commission-bar').forEach(bar => barObs.observe(bar));
+
+        // Counter animation
+        function animateCounter(el, target) {
+            const duration = 1600;
+            const start = performance.now();
+            const format = n => n.toLocaleString();
+            function tick(now) {
+                const p = Math.min((now - start) / duration, 1);
+                const eased = 1 - Math.pow(1 - p, 3);
+                el.textContent = format(Math.floor(target * eased));
+                if (p < 1) requestAnimationFrame(tick);
+                else el.textContent = format(target);
+            }
+            requestAnimationFrame(tick);
+        }
+        const counterObs = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    const t = parseInt(e.target.dataset.count);
+                    if (t && !prefersReducedMotion) animateCounter(e.target, t);
+                    else if (t) e.target.textContent = t.toLocaleString();
+                    counterObs.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.4 });
+        document.querySelectorAll('[data-count]').forEach(el => counterObs.observe(el));
+
+        // FAQ accordion
+        document.querySelectorAll('.faq-toggle').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const item = btn.closest('.faq-item');
+                const content = item.querySelector('.faq-content');
+                const icon = item.querySelector('.faq-icon');
+                const isOpen = !content.classList.contains('hidden');
+                document.querySelectorAll('.faq-item').forEach(other => {
+                    other.querySelector('.faq-content').classList.add('hidden');
+                    other.querySelector('.faq-icon').style.transform = '';
+                    other.querySelector('.faq-toggle').setAttribute('aria-expanded', 'false');
+                });
+                if (!isOpen) {
+                    content.classList.remove('hidden');
+                    icon.style.transform = 'rotate(180deg)';
+                    btn.setAttribute('aria-expanded', 'true');
+                }
+            });
+        });
+
+        // Mobile sticky CTA
+        const stickyCta = document.getElementById('mobile-sticky-cta');
+        const heroEl = document.querySelector('.hero-gradient');
+        const stickyObs = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                stickyCta.classList.toggle('translate-y-full', e.isIntersecting);
+                stickyCta.classList.toggle('translate-y-0', !e.isIntersecting);
+            });
+        }, { threshold: 0.05 });
+        stickyObs.observe(heroEl);
+
+        // Waitlist form handler
+        function handleWaitlist(e, form) {
+            e.preventDefault();
+            const btn = form.querySelector('button[type="submit"]');
+            const input = form.querySelector('input[type="email"]');
+            const orig = btn.textContent;
+            btn.textContent = 'Securing your spot...';
+            btn.disabled = true;
+            // Replace with Beehiiv / Tally / Supabase endpoint
+            setTimeout(() => {
+                btn.textContent = "You're in — welcome!";
+                btn.classList.replace('bg-brand-primary', 'bg-semantic-success');
+                btn.classList.remove('hover:bg-brand-primary-dark', 'cta-glow');
+                input.value = '';
+                setTimeout(() => {
+                    btn.textContent = orig;
+                    btn.classList.replace('bg-semantic-success', 'bg-brand-primary');
+                    btn.classList.add('hover:bg-brand-primary-dark', 'cta-glow');
+                    btn.disabled = false;
+                }, 3000);
+            }, 800);
+        }
+    </script>
+</body>
+</html>
