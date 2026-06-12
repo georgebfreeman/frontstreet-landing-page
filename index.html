@@ -184,6 +184,9 @@
             border-color: #C4702A;
             color: #F5F0E8;
         }
+
+        /* Hide scrollbar on mobile artist carousel */
+        .overflow-x-auto::-webkit-scrollbar { display: none; }
     </style>
 </head>
 <body class="antialiased overflow-x-hidden">
@@ -250,7 +253,7 @@
                         </div>
                     </div>
 
-                    <!-- Right: Founding Artists showcase -->
+                    <!-- Right: Founding Artists showcase — desktop 2x2 grid -->
                     <div class="anim-up hidden lg:block relative" style="animation-delay:0.5s">
                         <div class="relative w-full max-w-md ml-auto">
                             <div class="bg-surface-1 border border-surface-2 rounded-2xl p-5 shadow-2xl shadow-black/40 relative z-20">
@@ -296,6 +299,36 @@
                                         <p class="text-text-secondary text-xs">Nubian Square &middot; Sat, Aug 15</p>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mobile: Founding Artists horizontal scroll -->
+                    <div class="anim-up lg:hidden mt-10" style="animation-delay:0.5s">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="font-display font-bold text-text-primary text-sm">Founding Artists</span>
+                            <span class="text-[0.6rem] font-mono font-semibold text-brand-primary bg-brand-primary/10 px-2 py-0.5 rounded-full">BOSTON</span>
+                        </div>
+                        <div class="flex gap-3 overflow-x-auto pb-3 -mx-5 px-5 snap-x snap-mandatory" style="-webkit-overflow-scrolling: touch; scrollbar-width: none;">
+                            <div class="bg-surface-1 border border-surface-2 rounded-xl p-3 flex-shrink-0 w-[140px] snap-start">
+                                <img src="images/problak-headshot.jpg" alt="Problak — Boston muralist and founding FrontStreet artist" class="w-full aspect-square object-cover object-top rounded-lg mb-2">
+                                <p class="font-display font-bold text-sm text-text-primary leading-tight">Problak</p>
+                                <p class="text-text-secondary text-[0.7rem] mt-0.5">Muralist</p>
+                            </div>
+                            <div class="bg-surface-1 border border-surface-2 rounded-xl p-3 flex-shrink-0 w-[140px] snap-start">
+                                <img src="images/ayana-mack-profile.jpg" alt="Ayana Mack — Boston painter and founding FrontStreet artist" class="w-full aspect-square object-cover object-top rounded-lg mb-2">
+                                <p class="font-display font-bold text-sm text-text-primary leading-tight">Ayana Mack</p>
+                                <p class="text-text-secondary text-[0.7rem] mt-0.5">Painter</p>
+                            </div>
+                            <div class="bg-surface-1 border border-surface-2 rounded-xl p-3 flex-shrink-0 w-[140px] snap-start">
+                                <img src="images/danice-marshall-studio.jpg" alt="Danice D. Marshall — Boston painter and founding FrontStreet artist" class="w-full aspect-square object-cover object-top rounded-lg mb-2">
+                                <p class="font-display font-bold text-sm text-text-primary leading-tight">Danice D.M.</p>
+                                <p class="text-text-secondary text-[0.7rem] mt-0.5">Painter</p>
+                            </div>
+                            <div class="bg-surface-1 border border-surface-2 rounded-xl p-3 flex-shrink-0 w-[140px] snap-start">
+                                <img src="images/michael-talbot-profile.jpg" alt="Michael Talbot — Boston artist and founding FrontStreet artist" class="w-full aspect-square object-cover object-top rounded-lg mb-2">
+                                <p class="font-display font-bold text-sm text-text-primary leading-tight">Michael Talbot</p>
+                                <p class="text-text-secondary text-[0.7rem] mt-0.5">Visual Artist</p>
                             </div>
                         </div>
                     </div>
