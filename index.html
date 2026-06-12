@@ -1120,16 +1120,35 @@
         }, { threshold: 0.05 });
         stickyObs.observe(heroEl);
 
-        // Waitlist form handler
-        function handleWaitlist(e, form) {
+        // Kit (ConvertKit) configuration
+        // Replace these with your actual values from Kit
+        const KIT_FORM_ID = '9554648';
+        const KIT_API_KEY = 'K3BYBunXaojE9OFGwye0jQ';
+
+        // Waitlist form handler — sends email to Kit
+        async function handleWaitlist(e, form) {
             e.preventDefault();
             const btn = form.querySelector('button[type="submit"]');
             const input = form.querySelector('input[type="email"]');
+            const email = input.value.trim();
+            if (!email) return;
+
             const orig = btn.textContent;
             btn.textContent = 'Securing your spot...';
             btn.disabled = true;
-            // Replace with Beehiiv / Tally / Supabase endpoint
-            setTimeout(() => {
+
+            try {
+                const res = await fetch(
+                    `https://api.convertkit.com/v3/forms/${KIT_FORM_ID}/subscribe`,
+                    {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ api_key: KIT_API_KEY, email })
+                    }
+                );
+
+                if (!res.ok) throw new Error('Subscription failed');
+
                 btn.textContent = "You're in — welcome!";
                 btn.classList.replace('bg-brand-primary', 'bg-semantic-success');
                 btn.classList.remove('hover:bg-brand-primary-dark', 'cta-glow');
@@ -1140,7 +1159,17 @@
                     btn.classList.add('hover:bg-brand-primary-dark', 'cta-glow');
                     btn.disabled = false;
                 }, 3000);
-            }, 800);
+            } catch (err) {
+                btn.textContent = 'Something went wrong — try again';
+                btn.classList.replace('bg-brand-primary', 'bg-semantic-error');
+                btn.classList.remove('hover:bg-brand-primary-dark', 'cta-glow');
+                setTimeout(() => {
+                    btn.textContent = orig;
+                    btn.classList.replace('bg-semantic-error', 'bg-brand-primary');
+                    btn.classList.add('hover:bg-brand-primary-dark', 'cta-glow');
+                    btn.disabled = false;
+                }, 3000);
+            }
         }
     </script>
 </body>
