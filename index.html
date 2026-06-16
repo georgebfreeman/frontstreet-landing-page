@@ -1195,11 +1195,8 @@
                 btn.classList.remove('hover:bg-brand-primary-dark', 'cta-glow');
                 input.value = '';
                 setTimeout(() => {
-                    btn.textContent = orig;
-                    btn.classList.replace('bg-semantic-success', 'bg-brand-primary');
-                    btn.classList.add('hover:bg-brand-primary-dark', 'cta-glow');
-                    btn.disabled = false;
-                }, 3000);
+                    window.location.href = '/welcome.html?email=' + encodeURIComponent(email);
+                }, 800);
             } catch (err) {
                 btn.textContent = 'Something went wrong — try again';
                 btn.classList.replace('bg-brand-primary', 'bg-semantic-error');

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Welcome to FrontStreet — you're on the list.">
+    <meta name="theme-color" content="#0D0D0D">
+    <meta name="robots" content="noindex">
+    <title>Welcome to FrontStreet</title>
+
+    <!-- Meta Pixel -->
+    <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '1328224839288645');
+        fbq('track', 'PageView');
+        fbq('track', 'CompleteRegistration');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1328224839288645&ev=PageView&noscript=1"
+    /></noscript>
+
+    <!-- PostHog Analytics -->
+    <script>
+        !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug getPageviewId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+
+        posthog.init('phc_ovmgzCr8Fs5RXRk3evDMpja4syuBHtVKoKoWHJbx7fjh', {
+            api_host: 'https://g.frontstreetapp.com',
+            person_profiles: 'identified_only',
+            capture_pageview: true,
+            capture_pageleave: true,
+            disable_session_recording: false
+        });
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        surface: { 0: '#0D0D0D', 1: '#1A1A1A', 2: '#262626', 3: '#333333' },
+                        brand: { primary: '#C4702A', 'primary-dark': '#9E5720', 'primary-light': '#E8914E', accent: '#7B4FA6', 'accent-light': '#A87FD0' },
+                        text: { primary: '#F5F0E8', secondary: '#A89880', disabled: '#5C5147' },
+                        semantic: { success: '#4CAF72', warning: '#E8A020', error: '#D95454', info: '#4A90D9' }
+                    },
+                    fontFamily: {
+                        display: ['Syne', 'sans-serif'],
+                        body: ['"Space Grotesk"', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        *, *::before, *::after { box-sizing: border-box; }
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: #0D0D0D;
+            color: #F5F0E8;
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, #C4702A 0%, #E8914E 40%, #A87FD0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(32px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .anim-up {
+            opacity: 0;
+            animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .anim-in {
+            opacity: 0;
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        @keyframes checkPop {
+            0% { transform: scale(0); opacity: 0; }
+            60% { transform: scale(1.2); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .check-pop {
+            opacity: 0;
+            animation: checkPop 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+        }
+        .cta-glow { transition: box-shadow 0.3s ease, transform 0.2s ease; }
+        .cta-glow:hover {
+            box-shadow: 0 0 24px rgba(196,112,42,0.35);
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <header class="py-6 px-5 sm:px-8">
+        <div class="max-w-7xl mx-auto">
+            <a href="/" class="font-display font-bold text-2xl text-text-primary tracking-tight">Front<span class="text-brand-primary">Street</span></a>
+        </div>
+    </header>
+
+    <main class="flex-1 flex items-center justify-center px-5 sm:px-8 py-12">
+        <div class="absolute inset-0" style="background: radial-gradient(ellipse 60% 50% at 50% 40%, rgba(196,112,42,0.06) 0%, transparent 70%);"></div>
+
+        <div class="max-w-lg w-full text-center relative z-10">
+            <!-- Checkmark -->
+            <div class="check-pop mb-8 inline-flex items-center justify-center w-20 h-20 rounded-full bg-semantic-success/10 border-2 border-semantic-success/30">
+                <svg class="w-10 h-10 text-semantic-success" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+                </svg>
+            </div>
+
+            <!-- Confirmation -->
+            <div class="anim-up">
+                <h1 class="font-display font-extrabold text-4xl sm:text-5xl tracking-tight leading-[1.1] mb-4">
+                    You're <span class="text-gradient">in.</span>
+                </h1>
+                <p class="text-text-secondary text-lg leading-relaxed mb-10">
+                    Welcome to the founding cohort. We're building FrontStreet with artists like you — and we'd love to talk.
+                </p>
+            </div>
+
+            <!-- Name + Phone Form -->
+            <div class="anim-up" style="animation-delay: 0.15s;">
+                <div class="bg-surface-1 border border-surface-2 rounded-2xl p-6 sm:p-8 text-left">
+                    <h2 class="font-display font-bold text-xl text-text-primary mb-2">Help us reach you</h2>
+                    <p class="text-text-secondary text-sm mb-6">Drop your name and number so we can personally welcome you — no spam, just a real conversation.</p>
+
+                    <form id="details-form" class="space-y-4">
+                        <div>
+                            <label for="first_name" class="block text-text-secondary text-xs font-mono mb-1.5">First name</label>
+                            <input type="text" id="first_name" name="first_name" required placeholder="Your first name"
+                                class="w-full bg-surface-0 border border-surface-2 focus:border-brand-primary text-text-primary placeholder-text-disabled px-4 py-3.5 rounded-xl text-base outline-none transition-colors font-body">
+                        </div>
+                        <div>
+                            <label for="phone" class="block text-text-secondary text-xs font-mono mb-1.5">Phone number</label>
+                            <input type="tel" id="phone" name="phone" required placeholder="(617) 555-1234"
+                                class="w-full bg-surface-0 border border-surface-2 focus:border-brand-primary text-text-primary placeholder-text-disabled px-4 py-3.5 rounded-xl text-base outline-none transition-colors font-body">
+                        </div>
+                        <button type="submit" class="w-full bg-brand-primary hover:bg-brand-primary-dark text-text-primary font-semibold px-6 py-4 rounded-xl transition-all cta-glow text-base mt-2">
+                            Let's Talk
+                        </button>
+                    </form>
+
+                    <!-- Success state (hidden by default) -->
+                    <div id="details-success" class="hidden text-center py-4">
+                        <p class="text-semantic-success font-semibold text-lg font-display">We'll be in touch soon.</p>
+                        <p class="text-text-secondary text-sm mt-1">Keep an eye on your phone — it'll be a real person, not a bot.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Skip link -->
+            <div class="anim-in mt-6" style="animation-delay: 0.3s;">
+                <a href="/" class="text-text-disabled hover:text-text-secondary text-sm transition-colors">
+                    Skip for now &rarr;
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="py-8 px-5 sm:px-8 border-t border-surface-2">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p class="text-text-disabled text-xs">&copy; 2026 FromStreet2Canvas LLC. All rights reserved.</p>
+            <a href="https://www.instagram.com/frontstreetapp" target="_blank" rel="noopener noreferrer" class="text-text-secondary hover:text-text-primary transition-colors" aria-label="FrontStreet on Instagram">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        const KIT_FORM_ID = '9554648';
+        const KIT_API_KEY = 'K3BYBunXaojE9OFGwye0jQ';
+
+        const params = new URLSearchParams(window.location.search);
+        const email = params.get('email') || '';
+
+        if (email) {
+            posthog.identify(email, { email });
+        }
+        posthog.capture('registration_completed');
+
+        document.getElementById('details-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const form = e.target;
+            const btn = form.querySelector('button[type="submit"]');
+            const firstName = document.getElementById('first_name').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+
+            if (!firstName || !phone) return;
+
+            const orig = btn.textContent;
+            btn.textContent = 'Saving...';
+            btn.disabled = true;
+
+            try {
+                const body = {
+                    api_key: KIT_API_KEY,
+                    first_name: firstName,
+                    fields: { phone }
+                };
+                if (email) body.email = email;
+
+                const res = await fetch(
+                    `https://api.convertkit.com/v3/forms/${KIT_FORM_ID}/subscribe`,
+                    {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(body)
+                    }
+                );
+
+                if (!res.ok) throw new Error('Update failed');
+
+                posthog.capture('contact_details_provided', {
+                    has_phone: true,
+                    has_name: true
+                });
+                if (email) {
+                    posthog.setPersonProperties({ first_name: firstName, phone });
+                }
+
+                form.classList.add('hidden');
+                document.getElementById('details-success').classList.remove('hidden');
+            } catch (err) {
+                btn.textContent = 'Something went wrong — try again';
+                btn.classList.replace('bg-brand-primary', 'bg-semantic-error');
+                btn.classList.remove('hover:bg-brand-primary-dark', 'cta-glow');
+                setTimeout(() => {
+                    btn.textContent = orig;
+                    btn.classList.replace('bg-semantic-error', 'bg-brand-primary');
+                    btn.classList.add('hover:bg-brand-primary-dark', 'cta-glow');
+                    btn.disabled = false;
+                }, 3000);
+            }
+        });
+    </script>
+</body>
+</html>
