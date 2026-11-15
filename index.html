@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="FrontStreet — The home for Boston's Black artists. Your portfolio, your sales, and your events in one place. Join the waitlist.">
+    <meta name="description" content="FrontStreet — The home for Boston's Black artists. Your portfolio, your sales, and your events in one place. Sign up free — the app is live.">
     <meta name="theme-color" content="#0D0D0D">
     <title>FrontStreet — The Home for Boston's Black Artists</title>
 
@@ -232,7 +232,7 @@
                 <a href="#how-it-works" class="text-sm text-text-secondary hover:text-text-primary transition-colors">How It Works</a>
                 <a href="#compare" class="text-sm text-text-secondary hover:text-text-primary transition-colors">Compare</a>
                 <a href="#story" class="text-sm text-text-secondary hover:text-text-primary transition-colors">Our Story</a>
-                <a href="#join" class="bg-brand-primary hover:bg-brand-primary-dark text-text-primary text-sm font-semibold px-5 py-2.5 rounded-lg transition-all cta-glow">Get Early Access</a>
+                <a href="https://app.frontstreetapp.com" class="signup-cta bg-brand-primary hover:bg-brand-primary-dark text-text-primary text-sm font-semibold px-5 py-2.5 rounded-lg transition-all cta-glow" data-location="nav">Join FrontStreet</a>
             </div>
             <button id="mobile-menu-btn" class="md:hidden text-text-primary p-2 -mr-2" aria-label="Open menu" aria-expanded="false">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
@@ -244,7 +244,7 @@
                 <a href="#how-it-works" class="text-text-secondary hover:text-text-primary transition-colors py-3 border-b border-surface-2">How It Works</a>
                 <a href="#compare" class="text-text-secondary hover:text-text-primary transition-colors py-3 border-b border-surface-2">Compare</a>
                 <a href="#story" class="text-text-secondary hover:text-text-primary transition-colors py-3 border-b border-surface-2">Our Story</a>
-                <a href="#join" class="bg-brand-primary text-text-primary text-center font-semibold px-5 py-3.5 rounded-lg mt-4">Get Early Access</a>
+                <a href="https://app.frontstreetapp.com" class="signup-cta bg-brand-primary text-text-primary text-center font-semibold px-5 py-3.5 rounded-lg mt-4" data-location="mobile_menu">Join FrontStreet</a>
             </div>
         </div>
     </header>
@@ -271,15 +271,13 @@
                             The home for Boston's Black artists and the collectors who champion them. One platform for your portfolio, your sales, your events — built by the community, for the community.
                         </p>
 
-                        <!-- Email capture -->
+                        <!-- Primary CTA -->
                         <div class="anim-up" style="animation-delay:0.5s">
-                            <form id="hero-form" class="flex flex-col sm:flex-row gap-3 max-w-md" onsubmit="handleWaitlist(event, this)">
-                                <input type="email" required placeholder="Your email address" class="flex-1 bg-surface-1 border border-surface-2 focus:border-brand-primary text-text-primary placeholder-text-disabled px-5 py-4 rounded-xl text-base outline-none transition-colors font-body" aria-label="Email address">
-                                <button type="submit" class="bg-brand-primary hover:bg-brand-primary-dark text-text-primary font-semibold px-7 py-4 rounded-xl transition-all cta-glow whitespace-nowrap text-base">
-                                    Get Early Access
-                                </button>
-                            </form>
-                            <p class="text-text-disabled text-xs mt-3 font-mono">Free forever. Be first in line when we launch.</p>
+                            <a href="https://app.frontstreetapp.com" class="signup-cta inline-flex items-center justify-center gap-2 bg-brand-primary hover:bg-brand-primary-dark text-text-primary font-semibold px-8 py-4 rounded-xl transition-all cta-glow whitespace-nowrap text-base" data-location="hero">
+                                Sign Up Free
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                            </a>
+                            <p class="text-text-disabled text-xs mt-3 font-mono">Free forever. The app is live — sign up and start today.</p>
                         </div>
                     </div>
 
@@ -506,7 +504,7 @@
                                 <span class="text-text-secondary text-sm">No gallery representation required — list directly, get discovered locally</span>
                             </div>
                         </div>
-                        <a href="#join" class="inline-flex items-center gap-2 bg-brand-primary hover:bg-brand-primary-dark text-text-primary font-semibold px-6 py-3.5 rounded-xl transition-all cta-glow text-sm">
+                        <a href="https://app.frontstreetapp.com" class="signup-cta inline-flex items-center gap-2 bg-brand-primary hover:bg-brand-primary-dark text-text-primary font-semibold px-6 py-3.5 rounded-xl transition-all cta-glow text-sm" data-location="for_you_artist">
                             I'm an Artist — Join as a Founder
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                         </a>
@@ -547,8 +545,8 @@
                                 <span class="text-text-secondary text-sm">Know your purchase directly supports the artist and the community</span>
                             </div>
                         </div>
-                        <a href="#join" class="inline-flex items-center gap-2 bg-surface-2 hover:bg-surface-3 border border-surface-3 text-text-primary font-semibold px-6 py-3.5 rounded-xl transition-all text-sm">
-                            I'm a Collector — Get Early Access
+                        <a href="https://app.frontstreetapp.com" class="signup-cta inline-flex items-center gap-2 bg-surface-2 hover:bg-surface-3 border border-surface-3 text-text-primary font-semibold px-6 py-3.5 rounded-xl transition-all text-sm" data-location="for_you_collector">
+                            I'm a Collector — Join Free
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                         </a>
                     </div>
@@ -697,7 +695,7 @@
                                 <span class="text-xs font-medium text-brand-accent bg-brand-accent/10 px-3 py-1.5 rounded-full">Workshop</span>
                                 <span class="text-xs font-medium text-brand-accent bg-brand-accent/10 px-3 py-1.5 rounded-full">Mixer</span>
                             </div>
-                            <span class="inline-block mt-4 text-brand-accent-light text-xs font-mono">Events launching in v2</span>
+                            <span class="inline-block mt-4 text-brand-accent-light text-xs font-mono">Events are live now — list yours today</span>
                         </div>
                     </div>
                 </div>
@@ -924,11 +922,11 @@
                     </div>
                     <div class="reveal faq-item bg-surface-1 border border-surface-2 rounded-xl overflow-hidden" style="transition-delay:0.03s">
                         <button class="faq-toggle w-full text-left px-6 py-5 flex items-center justify-between gap-4" aria-expanded="false">
-                            <span class="font-display font-semibold text-text-primary">When does FrontStreet launch?</span>
+                            <span class="font-display font-semibold text-text-primary">Is FrontStreet available now?</span>
                             <svg class="faq-icon w-5 h-5 text-text-secondary flex-shrink-0 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                         </button>
                         <div class="faq-content hidden px-6 pb-5">
-                            <p class="text-text-secondary text-sm leading-relaxed">We're building the first version now and onboarding our founding cohort of Boston artists. Join the waitlist to get early access — founding members shape the platform before it opens to the public.</p>
+                            <p class="text-text-secondary text-sm leading-relaxed">Yes — FrontStreet is live now. Create your profile, upload your portfolio, list events, and start selling today. We're still onboarding our founding cohort of Boston artists, so early members get founding-member status and help shape where the platform goes next.</p>
                         </div>
                     </div>
                     <div class="reveal faq-item bg-surface-1 border border-surface-2 rounded-xl overflow-hidden" style="transition-delay:0.06s">
@@ -950,6 +948,15 @@
                         </div>
                     </div>
                     <div class="reveal faq-item bg-surface-1 border border-surface-2 rounded-xl overflow-hidden" style="transition-delay:0.12s">
+                        <button class="faq-toggle w-full text-left px-6 py-5 flex items-center justify-between gap-4" aria-expanded="false">
+                            <span class="font-display font-semibold text-text-primary">Can my gallery or festival use this?</span>
+                            <svg class="faq-icon w-5 h-5 text-text-secondary flex-shrink-0 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div class="faq-content hidden px-6 pb-5">
+                            <p class="text-text-secondary text-sm leading-relaxed">Yes. Galleries, festivals, and collectives can create an Organizer account — a public profile and directory listing to showcase your roster, run exhibitions and pop-ups, and sell event tickets at 3% + $0.50. If you program or platform Boston's Black art community, FrontStreet is built for you too.</p>
+                        </div>
+                    </div>
+                    <div class="reveal faq-item bg-surface-1 border border-surface-2 rounded-xl overflow-hidden" style="transition-delay:0.15s">
                         <button class="faq-toggle w-full text-left px-6 py-5 flex items-center justify-between gap-4" aria-expanded="false">
                             <span class="font-display font-semibold text-text-primary">Does FrontStreet hold my money?</span>
                             <svg class="faq-icon w-5 h-5 text-text-secondary flex-shrink-0 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
@@ -987,15 +994,13 @@
                         Your art deserves<br>a <span class="text-gradient">home.</span>
                     </h2>
                     <p class="text-text-secondary text-lg leading-relaxed mb-10 max-w-md mx-auto">
-                        Become a founding member — help shape FrontStreet before it opens to the public.
+                        Become a founding member — FrontStreet is live, and early members help shape where it goes next.
                     </p>
 
-                    <form id="final-form" class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto" onsubmit="handleWaitlist(event, this)">
-                        <input type="email" required placeholder="Your email address" class="flex-1 bg-surface-1 border border-surface-2 focus:border-brand-primary text-text-primary placeholder-text-disabled px-5 py-4 rounded-xl text-base outline-none transition-colors font-body" aria-label="Email address">
-                        <button type="submit" class="bg-brand-primary hover:bg-brand-primary-dark text-text-primary font-semibold px-7 py-4 rounded-xl transition-all cta-glow whitespace-nowrap text-base">
-                            Be First In Line
-                        </button>
-                    </form>
+                    <a href="https://app.frontstreetapp.com" class="signup-cta inline-flex items-center justify-center gap-2 bg-brand-primary hover:bg-brand-primary-dark text-text-primary font-semibold px-8 py-4 rounded-xl transition-all cta-glow whitespace-nowrap text-base" data-location="final_cta">
+                        Join FrontStreet
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                    </a>
                     <p class="text-text-disabled text-xs mt-4 font-mono">Free forever. No spam. Artists & collectors welcome.</p>
                 </div>
             </div>
@@ -1034,8 +1039,8 @@
 
     <!-- Mobile sticky CTA -->
     <div id="mobile-sticky-cta" class="fixed bottom-0 left-0 right-0 bg-surface-0/95 backdrop-blur-md border-t border-surface-2 p-3 z-40 md:hidden translate-y-full transition-transform duration-300">
-        <a href="#join" class="block bg-brand-primary text-text-primary text-center font-semibold py-3.5 rounded-xl font-display">
-            Get Early Access
+        <a href="https://app.frontstreetapp.com" class="signup-cta block bg-brand-primary text-text-primary text-center font-semibold py-3.5 rounded-xl font-display" data-location="mobile_sticky">
+            Sign Up Free
         </a>
     </div>
 
@@ -1152,64 +1157,6 @@
         }, { threshold: 0.05 });
         stickyObs.observe(heroEl);
 
-        // Kit (ConvertKit) configuration
-        // Replace these with your actual values from Kit
-        const KIT_FORM_ID = '9554648';
-        const KIT_API_KEY = 'K3BYBunXaojE9OFGwye0jQ';
-
-        // Waitlist form handler — sends email to Kit
-        async function handleWaitlist(e, form) {
-            e.preventDefault();
-            const btn = form.querySelector('button[type="submit"]');
-            const input = form.querySelector('input[type="email"]');
-            const email = input.value.trim();
-            if (!email) return;
-
-            const orig = btn.textContent;
-            btn.textContent = 'Securing your spot...';
-            btn.disabled = true;
-
-            try {
-                const res = await fetch(
-                    `https://api.convertkit.com/v3/forms/${KIT_FORM_ID}/subscribe`,
-                    {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ api_key: KIT_API_KEY, email })
-                    }
-                );
-
-                if (!res.ok) throw new Error('Subscription failed');
-
-                posthog.identify(email, { email });
-                posthog.capture('waitlist_signup', {
-                    form_location: form.id === 'hero-form' ? 'hero' : 'final_cta'
-                });
-                fbq('track', 'Lead', {
-                    content_name: 'waitlist_signup',
-                    content_category: form.id === 'hero-form' ? 'hero' : 'final_cta'
-                });
-
-                btn.textContent = "You're in — welcome!";
-                btn.classList.replace('bg-brand-primary', 'bg-semantic-success');
-                btn.classList.remove('hover:bg-brand-primary-dark', 'cta-glow');
-                input.value = '';
-                setTimeout(() => {
-                    window.location.href = '/welcome.html?email=' + encodeURIComponent(email);
-                }, 800);
-            } catch (err) {
-                btn.textContent = 'Something went wrong — try again';
-                btn.classList.replace('bg-brand-primary', 'bg-semantic-error');
-                btn.classList.remove('hover:bg-brand-primary-dark', 'cta-glow');
-                setTimeout(() => {
-                    btn.textContent = orig;
-                    btn.classList.replace('bg-semantic-error', 'bg-brand-primary');
-                    btn.classList.add('hover:bg-brand-primary-dark', 'cta-glow');
-                    btn.disabled = false;
-                }, 3000);
-            }
-        }
-
         // PostHog: Track section visibility
         const sectionObs = new IntersectionObserver((entries) => {
             entries.forEach(e => {
@@ -1222,14 +1169,10 @@
         }, { threshold: 0.3 });
         document.querySelectorAll('section[id]').forEach(s => sectionObs.observe(s));
 
-        // PostHog: Track CTA clicks (nav + mobile sticky)
-        document.querySelectorAll('a[href="#join"]').forEach(link => {
+        // PostHog + Meta: Track signup CTA clicks (all CTAs now link to app.frontstreetapp.com)
+        document.querySelectorAll('.signup-cta').forEach(link => {
             link.addEventListener('click', () => {
-                const location = link.closest('#mobile-sticky-cta') ? 'mobile_sticky'
-                    : link.closest('#mobile-menu') ? 'mobile_menu'
-                    : link.closest('header') ? 'nav'
-                    : link.closest('#for-you') ? 'for_you_section'
-                    : 'page';
+                const location = link.dataset.location || 'page';
                 posthog.capture('cta_clicked', { location });
                 fbq('trackCustom', 'CTAClicked', { location });
             });
