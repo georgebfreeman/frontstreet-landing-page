@@ -204,6 +204,10 @@
             border-color: rgba(196,112,42,0.5);
             background-color: rgba(26,26,26,0.8);
         }
+        /* Organizer card hovers blue to match its accent */
+        #organizers.audience-card:hover {
+            border-color: rgba(74,144,217,0.5);
+        }
 
         /* Medium chip */
         .medium-chip {
@@ -229,6 +233,7 @@
             <a href="#" class="font-display font-bold text-2xl text-text-primary tracking-tight">Front<span class="text-brand-primary">Street</span></a>
             <div class="hidden md:flex items-center gap-8">
                 <a href="#for-you" class="text-sm text-text-secondary hover:text-text-primary transition-colors">For You</a>
+                <a href="#organizers" class="text-sm text-text-secondary hover:text-text-primary transition-colors">Organizers</a>
                 <a href="#how-it-works" class="text-sm text-text-secondary hover:text-text-primary transition-colors">How It Works</a>
                 <a href="#compare" class="text-sm text-text-secondary hover:text-text-primary transition-colors">Compare</a>
                 <a href="#story" class="text-sm text-text-secondary hover:text-text-primary transition-colors">Our Story</a>
@@ -241,6 +246,7 @@
         <div id="mobile-menu" class="md:hidden hidden bg-surface-1/95 backdrop-blur-md border-t border-surface-2 px-5 py-5">
             <div class="flex flex-col gap-1">
                 <a href="#for-you" class="text-text-secondary hover:text-text-primary transition-colors py-3 border-b border-surface-2">For You</a>
+                <a href="#organizers" class="text-text-secondary hover:text-text-primary transition-colors py-3 border-b border-surface-2">Organizers</a>
                 <a href="#how-it-works" class="text-text-secondary hover:text-text-primary transition-colors py-3 border-b border-surface-2">How It Works</a>
                 <a href="#compare" class="text-text-secondary hover:text-text-primary transition-colors py-3 border-b border-surface-2">Compare</a>
                 <a href="#story" class="text-text-secondary hover:text-text-primary transition-colors py-3 border-b border-surface-2">Our Story</a>
@@ -464,11 +470,11 @@
                 <div class="reveal text-center max-w-2xl mx-auto mb-20">
                     <div class="accent-line mx-auto mb-6"></div>
                     <h2 class="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl tracking-tight leading-tight">
-                        Whether you <span class="text-gradient">create</span> the art<br>or <span class="text-gradient">collect</span> it.
+                        Whether you <span class="text-gradient">create</span> the art, <span class="text-gradient">collect</span> it,<br>or <span class="text-gradient">stage</span> it.
                     </h2>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     <!-- FOR ARTISTS -->
                     <div class="reveal audience-card bg-surface-1 border border-surface-2 rounded-2xl p-8 sm:p-10">
                         <span class="inline-block font-mono text-xs font-semibold tracking-widest text-brand-primary uppercase mb-6">For Artists</span>
@@ -547,6 +553,41 @@
                         </div>
                         <a href="https://app.frontstreetapp.com" class="signup-cta inline-flex items-center gap-2 bg-surface-2 hover:bg-surface-3 border border-surface-3 text-text-primary font-semibold px-6 py-3.5 rounded-xl transition-all text-sm" data-location="for_you_collector">
                             I'm a Collector — Join Free
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                        </a>
+                    </div>
+
+                    <!-- FOR ORGANIZERS -->
+                    <div id="organizers" class="reveal audience-card bg-surface-1 border border-surface-2 rounded-2xl p-8 sm:p-10" style="transition-delay: 0.2s">
+                        <span class="inline-block font-mono text-xs font-semibold tracking-widest text-semantic-info uppercase mb-6">For Organizers, Galleries &amp; Collectives</span>
+                        <h3 class="font-display font-bold text-2xl sm:text-3xl leading-tight mb-4">
+                            Run your events. Grow your following.
+                        </h3>
+                        <p class="text-text-secondary leading-relaxed mb-8">
+                            Built to work alongside what you're already doing, not compete with it. FrontStreet gives festivals, galleries, and arts collectives a home for their events — and the community that follows them.
+                        </p>
+                        <div class="space-y-4 mb-8">
+                            <div class="flex items-start gap-3">
+                                <div class="w-6 h-6 rounded-full bg-semantic-info/15 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <svg class="w-3.5 h-3.5 text-semantic-info" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                                </div>
+                                <span class="text-text-secondary text-sm">A dedicated Organizer profile — cover image, org type, bio — with a listing in the browsable <span class="text-text-primary font-semibold">Organizations directory</span></span>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <div class="w-6 h-6 rounded-full bg-semantic-info/15 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <svg class="w-3.5 h-3.5 text-semantic-info" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                                </div>
+                                <span class="text-text-secondary text-sm">Run exhibitions, open studios, and pop-ups with free RSVP or ticketing at <span class="text-text-primary font-semibold">3% + $0.50</span> — not Eventbrite's 10–14% — paid to your org's bank</span>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <div class="w-6 h-6 rounded-full bg-semantic-info/15 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <svg class="w-3.5 h-3.5 text-semantic-info" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                                </div>
+                                <span class="text-text-secondary text-sm">Followers and placement in the Events tab and home feed — in front of every collector and artist browsing Boston's Black art scene</span>
+                            </div>
+                        </div>
+                        <a href="https://app.frontstreetapp.com" class="signup-cta inline-flex items-center gap-2 bg-surface-2 hover:bg-surface-3 border border-surface-3 text-text-primary font-semibold px-6 py-3.5 rounded-xl transition-all text-sm" data-location="for_you_organizer">
+                            I'm an Organizer — Create a Profile
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                         </a>
                     </div>
